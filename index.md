@@ -20,29 +20,18 @@ https://github.com/acmucsd/energium-ai-2020/tree/main/kits/python
 - [Position][8]
 
 ### Agent
-#### `id`
 
-0 for team red, 1 for team blue.
+**`id`** - 0 for team red, 1 for team blue.
 
-#### `turn`
+**`turn`** - Current match turn. Equal to [unit.match_turn][3]
 
-Current match turn. Equal to [unit.match_turn][3]
+**`mapWidth`** - Width of the map.
 
-#### `mapWidth`
+**`mapHeight`** - Height of the map.
 
-Width of the map.
+**`map`** - Current match turn. Equal to [unit.match_turn][3]
 
-#### `mapHeight`
-
-Height of the map.
-
-#### `map`
-
-Current match turn. Equal to [unit.match_turn][3]
-
-#### `players`
-
-List containing the two [Player][4] objects, indexed by their id (red first, then blue).
+**`players`** - List containing the two [Player][4] objects, indexed by their id (red first, then blue).
 
 ### GAME_CONSTANTS
 
@@ -71,44 +60,100 @@ This is dictionary containing several subdictionaries. The correct way to access
 `BREAKDOWN_MAX` - If a unit reaches this level of breakdown it dies.
 
 ### Base
-#### `team`
 
-0 for team red, 1 for team blue.
+**`team`** - 0 for team red, 1 for team blue.
 
-#### `pos`
+**`pos`** - A [Position][8] object representing its location.
 
-A [Position][8] object representing its location.
-
-#### `spawn_unit()`
-
-Returns a string to spawn a collector on the base. You should wait to print out the string until the end of your turn, where you should print out all your commands on one line. Look at the starter kit's `bot.py` file to see how they do it.
+**`spawn_unit()`** - Returns a string to spawn a collector on the base. You should wait to print out the string until the end of your turn, where you should print out all your commands on one line. Look at the starter kit's `bot.py` file to see how they do it.
 
 ### Unit
-#### `team`
 
-0 for team red, 1 for team blue.
+**`team`** - 0 for team red, 1 for team blue.
 
-#### `id`
+**`id`** - A unique integer that identifies this unit. Currently the ids are set up so that the first collector to be created will get an id of 0, the next will get an id of 1, and it increases by 1 every time a new collector is spawned.
 
-A unique integer that identifies this unit. Currently the ids are set up so that the first collector to be created will get an id of 0, the next will get an id of 1, and it increases by 1 every time a new collector is spawned.
+**`last_repair_turn`** - The last turn this collector was repaired. I.e. its breakdown level was equal to 0 on this turn.
 
-#### `last_repair_turn`
+**`match_turn`** - The current round in the match. It is equal to [agent.turn][1].
 
-The last turn this collector was repaired. I.e. its breakdown level was equal to 0 on this turn.
+**`get_breakdown_level()`** - Returns the breakdown level of this unit. If it gets above [GAME_CONSTANTS["PARAMETERS"]["BREAKDOWN_MAX"]][2] the unit will die.
 
-#### `match_turn`
+**`spawn_unit(direction)`** - Takes a single argument, [direction][2] (one of `n`, `e`, `s`, and `w`), and returns a string to move the unit in that direction. You should wait to print out the string until the end of your turn, where you should print out all your commands on one line. Look at the starter kit's `bot.py` file to see how they do it.
 
-The current round in the match. It is equal to [agent.turn][1].
+#### Player
 
-#### `get_breakdown_level()`
+**`team`** - 0 for team red, 1 for team blue.
 
-Returns the breakdown level of this unit. If it gets above [GAME_CONSTANTS["PARAMETERS"]["BREAKDOWN_MAX"]][2] the unit will die.
+**`energium`** - The amount of energium this player has.
 
-#### `spawn_unit(direction)`
+**`units`** - A list of [units][4] this player controls.
 
-Takes a single argument, [direction][2], and returns a string to move the unit in that direction. You should wait to print out the string until the end of your turn, where you should print out all your commands on one line. Look at the starter kit's `bot.py` file to see how they do it.
+**`bases`** - A list of [bases][3] this player controls.
 
+#### GameMap
 
+**`width`** - Width of the map.
+
+**`height`** - Height of the map.
+
+**`bases`** - List of [bases][3] from both teams on the map.
+
+**`players`** - List containing the two [Player][4] objects, indexed by their id (red first, then blue).
+
+**`get_tile_by_pos(position)`** - Takes one argument, position (a [Position][8] object), and returns the [Tile][7] object at that position.
+
+**`get_tile(x, y)`** - Returns the [Tile][7] object at the location `(x, y)`.
+
+#### Tile
+
+**`base_team`** - If it is a base, it is equal to its team's id (0 for red, 1 for blue). If it is not a base, it is equal to `None`.
+
+**`energium`** - The amount of energium (resources) at the tile. Energium values never change for a given tile. Also, make sure to note that the energium could be negative on a tile, in which case you would lose energium for having a unit on the tile. All base tiles should have 0 energium on them.
+
+**`pos`** - A [Position][8] object representing the tile's location.
+
+**`is_base()`** - Returns `True` if this tile has a base on it, otherwise it returns `False`.
+
+#### Position
+
+**`x`** - The x-coordinate.
+
+**`y`** - The y-coordinate.
+
+**`equals(other_position)`** - Checks if this position is equal to another position.
+
+**`is_adjacent(other_position)`** - Checks if this position is adjacent to another position.
+
+**`translate(direction, k)`** - Translates this position `k` units in the given direction.
+
+**`distance_to(other_position)`** - DO NOT USE! It gives the Euclidean distance (distance as the crow flies) from this position to another position. However, units can only move in the four cardinal directions so this "distance" isn't a true reflection of how long it will actually take to get there. Plus, it has a nasty square root in there which makes it much much slower. I would recommend implementing your own distance function as follows:
+
+    def taxicab_distance(position1, position2):
+        return abs(position1.x - position2.x) + abs(position1.y - position2.y)
+
+This finds the taxicab distance between the two points, basically how far away they are if you can't move diagonally but only along the cardinal directions.
+
+**`direction_to(other_position)`** - This finds the direction that moves closest to the target position. I would recommend not using this function, as it relies on the above `distance_to` function which is quite slow. Instead, I would implement your own as follows:
+
+    def direction_to(pos, target):
+        closest_direction = None
+        taxicab_dist = taxicab_distance(pos, target)
+        bigger_side_length = max(abs(pos.x - target.x), abs(pos.y - target.y))
+        
+        for dir in ALL_DIRECTIONS: # ALL_DIRECTIONS is defined at the top of bot.py
+            newpos = pos.translate(dir, 1)
+            dist = taxicab_distance(newpos, target)
+            if dist < taxicab_dist:
+                taxicab_dist = dist
+                bigger_side_length = max(abs(newpos.x - target.x), abs(newpos.y - target.y))
+                closest_direction = dir
+            elif dist == taxicab_dist:
+                s = max(abs(newpos.x - target.x), abs(newpos.y - target.y))
+                if s < bigger_side_length:
+                    bigger_side_length = s
+                    closest_direction = dir
+        return closest_direction
 
 [1]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Agent
 [2]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#GAME_CONSTANTS
