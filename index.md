@@ -8,6 +8,8 @@ This competition instead achieves this by doing something similar to what CodinG
 Download the kit here:
 https://github.com/acmucsd/energium-ai-2020/tree/main/kits/python
 
+-----
+
 ### Objects
 
 - [Agent][1]
@@ -18,6 +20,8 @@ https://github.com/acmucsd/energium-ai-2020/tree/main/kits/python
 - [GameMap][6]
 - [Tile][7]
 - [Position][8]
+
+-----
 
 ### Agent
 
@@ -33,9 +37,13 @@ https://github.com/acmucsd/energium-ai-2020/tree/main/kits/python
 
 **`players`** - List containing the two [Player][4] objects, indexed by their id (red first, then blue).
 
+-----
+
 ### GAME_CONSTANTS
 
 This is dictionary containing several subdictionaries. The correct way to access a constant would be `GAME_CONSTANTS["<Group>"]["<Property>"]`. For example, to access the `UNIT_COST` you would write `GAME_CONSTANTS["PARAMETERS"]["UNIT_COST"]`.
+
+-----
 
 #### `DIRECTIONS`
 
@@ -46,6 +54,8 @@ This is dictionary containing several subdictionaries. The correct way to access
 **`SOUTH`** - `"s"` (moving south 1 unit is equivalent to a translation by the vector `[0, 1]`)
 
 **`WEST`** - `"w"` (moving  1 west is equivalent to a translation by the vector `[-1, 0]`)
+
+-----
 
 #### `Parameters`
 
@@ -59,6 +69,8 @@ This is dictionary containing several subdictionaries. The correct way to access
 
 **`BREAKDOWN_MAX`** - If a unit reaches this level of breakdown it dies.
 
+-----
+
 ### Base
 
 **`team`** - 0 for team red, 1 for team blue.
@@ -66,6 +78,8 @@ This is dictionary containing several subdictionaries. The correct way to access
 **`pos`** - A [Position][8] object representing its location.
 
 **`spawn_unit()`** - Returns a string to spawn a collector on the base. You should wait to print out the string until the end of your turn, where you should print out all your commands on one line. Look at the starter kit's `bot.py` file to see how they do it.
+
+-----
 
 ### Unit
 
@@ -81,6 +95,8 @@ This is dictionary containing several subdictionaries. The correct way to access
 
 **`spawn_unit(direction)`** - Takes a single argument, [direction][2] (one of `n`, `e`, `s`, and `w`), and returns a string to move the unit in that direction. You should wait to print out the string until the end of your turn, where you should print out all your commands on one line. Look at the starter kit's `bot.py` file to see how they do it.
 
+-----
+
 #### Player
 
 **`team`** - 0 for team red, 1 for team blue.
@@ -90,6 +106,8 @@ This is dictionary containing several subdictionaries. The correct way to access
 **`units`** - A list of [units][4] this player controls.
 
 **`bases`** - A list of [bases][3] this player controls.
+
+-----
 
 #### GameMap
 
@@ -105,6 +123,8 @@ This is dictionary containing several subdictionaries. The correct way to access
 
 **`get_tile(x, y)`** - Returns the [Tile][7] object at the location `(x, y)`.
 
+-----
+
 #### Tile
 
 **`base_team`** - If it is a base, it is equal to its team's id (0 for red, 1 for blue). If it is not a base, it is equal to `None`.
@@ -114,6 +134,8 @@ This is dictionary containing several subdictionaries. The correct way to access
 **`pos`** - A [Position][8] object representing the tile's location.
 
 **`is_base()`** - Returns `True` if this tile has a base on it, otherwise it returns `False`.
+
+-----
 
 #### Position
 
