@@ -57,7 +57,7 @@ This is dictionary containing several subdictionaries. The correct way to access
 
 -----
 
-#### `Parameters`
+#### `PARAMETERS`
 
 **`UNIT_COST`** - Cost to build one collector.
 
