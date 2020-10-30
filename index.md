@@ -1,37 +1,36 @@
-## Welcome to GitHub Pages
+## ACM AI 2020 (Energium) Python Docs
 
-You can use the [editor on GitHub](https://github.com/programjames/acmai2020docs/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+You may have noticed that people can submit code in Python, Javascript, or Java for this competition. In 2018 Battlecode achieved this by transpiling Python and Java code to Javascript, but the transpiling wasn't perfect and also slowed down the code.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This competition instead achieves this by doing something similar to what CodinGame does. It takes control of the IOStream and prints out the board every round. Then, using whichever language you prefer, you can read what was printed out and get a list of where units and resources are. Of course, this can be cumbersome to do, but fortunately the organizers included a "kit" that does the processing all for you. Unfortunately, there was no documentation for this kit, so I have made some here.
 
-### Markdown
+### Installation
+Download the kit here:
+https://github.com/acmucsd/energium-ai-2020/tree/main/kits/python
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- [Agent][1]
+- [GAME_CONSTANTS][2]
+- [Unit][3]
+- [Player][4]
+- [GameMap][5]
+- [Tile][6]
+- [Position][7]
 
-```markdown
-Syntax highlighted code block
+### Agent
+#### `agent.id`
 
-# Header 1
-## Header 2
-### Header 3
+0 for team red, 1 for team blue.
 
-- Bulleted
-- List
+`turn`
 
-1. Numbered
-2. List
+Current match turn. Equal to [unit.match_turn][35]
 
-**Bold** and _Italic_ and `Code` text
+[1]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Agent
+[2]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#GAME_CONSTANTS
+[3]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Unit
+[4]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Player
+[5]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#GameMap
+[6]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Tile
+[7]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Position
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/programjames/acmai2020docs/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[35]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#agent.id
