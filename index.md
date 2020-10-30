@@ -180,6 +180,12 @@ def direction_to(pos, target):
     return closest_direction
 ```
 
+I am currently submitting a pull request that will add functions that do the above to the `Position` class. They will be
+
+**`taxicab_distance_to(other_position)`** - Gives the taxicab distance between this position and another position.
+
+**`direction_to_quick(other_position)`** - Does the same thing as `direction_to(other_position)` but it runs much quicker because it doesn't rely on finding the Euclidean distance.
+
 [1]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Agent
 [2]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#GAME_CONSTANTS
 [3]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Base
