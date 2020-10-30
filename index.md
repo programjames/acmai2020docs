@@ -39,25 +39,25 @@ This is dictionary containing several subdictionaries. The correct way to access
 
 #### `DIRECTIONS`
 
-`NORTH` - `"n"` (moving north 1 unit is equivalent to a translation by the vector `[0, -1]`)
+**`NORTH`** - `"n"` (moving north 1 unit is equivalent to a translation by the vector `[0, -1]`)
 
-`EAST` - `"e"` (moving east 1 unit is equivalent to a translation by the vector `[1, 0]`)
+**`EAST`** - `"e"` (moving east 1 unit is equivalent to a translation by the vector `[1, 0]`)
 
-`SOUTH` - `"s"` (moving south 1 unit is equivalent to a translation by the vector `[0, 1]`)
+**`SOUTH`** - `"s"` (moving south 1 unit is equivalent to a translation by the vector `[0, 1]`)
 
-`WEST` - `"w"` (moving  1 west is equivalent to a translation by the vector `[-1, 0]`)
+**`WEST`** - `"w"` (moving  1 west is equivalent to a translation by the vector `[-1, 0]`)
 
 #### `Parameters`
 
-`UNIT_COST` - Cost to build one collector.
+**`UNIT_COST`** - Cost to build one collector.
 
-`MAX_TURNS` - How many turns are in a match.
+**`MAX_TURNS`** - How many turns are in a match.
 
-`INITIAL_POINTS` - Amount of energium you start with.
+**`INITIAL_POINTS`** - Amount of energium you start with.
 
-`BREAKDOWN_TURNS` - How many turns it takes for a unit to "breakdown" by 1.
+**`BREAKDOWN_TURNS`** - How many turns it takes for a unit to "breakdown" by 1.
 
-`BREAKDOWN_MAX` - If a unit reaches this level of breakdown it dies.
+**`BREAKDOWN_MAX`** - If a unit reaches this level of breakdown it dies.
 
 ### Base
 
@@ -129,31 +129,34 @@ This is dictionary containing several subdictionaries. The correct way to access
 
 **`distance_to(other_position)`** - DO NOT USE! It gives the Euclidean distance (distance as the crow flies) from this position to another position. However, units can only move in the four cardinal directions so this "distance" isn't a true reflection of how long it will actually take to get there. Plus, it has a nasty square root in there which makes it much much slower. I would recommend implementing your own distance function as follows:
 
-    def taxicab_distance(position1, position2):
-        return abs(position1.x - position2.x) + abs(position1.y - position2.y)
+```python
+def taxicab_distance(position1, position2):
+    return abs(position1.x - position2.x) + abs(position1.y - position2.y)
+```
 
 This finds the taxicab distance between the two points, basically how far away they are if you can't move diagonally but only along the cardinal directions.
 
 **`direction_to(other_position)`** - This finds the direction that moves closest to the target position. I would recommend not using this function, as it relies on the above `distance_to` function which is quite slow. Instead, I would implement your own as follows:
 
-    def direction_to(pos, target):
-        closest_direction = None
-        taxicab_dist = taxicab_distance(pos, target)
-        bigger_side_length = max(abs(pos.x - target.x), abs(pos.y - target.y))
-        
-        for dir in ALL_DIRECTIONS: # ALL_DIRECTIONS is defined at the top of bot.py
-            newpos = pos.translate(dir, 1)
-            dist = taxicab_distance(newpos, target)
-            if dist < taxicab_dist:
-                taxicab_dist = dist
-                bigger_side_length = max(abs(newpos.x - target.x), abs(newpos.y - target.y))
+```python
+def direction_to(pos, target):
+    closest_direction = None
+    taxicab_dist = taxicab_distance(pos, target)
+    bigger_side_length = max(abs(pos.x - target.x), abs(pos.y - target.y))
+    for dir in ALL_DIRECTIONS: # ALL_DIRECTIONS is defined at the top of bot.py
+        newpos = pos.translate(dir, 1)
+        dist = taxicab_distance(newpos, target)
+        if dist < taxicab_dist:
+            taxicab_dist = dist
+            bigger_side_length = max(abs(newpos.x - target.x), abs(newpos.y - target.y))
+            closest_direction = dir
+        elif dist == taxicab_dist:
+            s = max(abs(newpos.x - target.x), abs(newpos.y - target.y))
+            if s < bigger_side_length:
+                bigger_side_length = s
                 closest_direction = dir
-            elif dist == taxicab_dist:
-                s = max(abs(newpos.x - target.x), abs(newpos.y - target.y))
-                if s < bigger_side_length:
-                    bigger_side_length = s
-                    closest_direction = dir
-        return closest_direction
+    return closest_direction
+```
 
 [1]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#Agent
 [2]: https://github.com/programjames/acmai2020docs/blob/gh-pages/index.md#GAME_CONSTANTS
